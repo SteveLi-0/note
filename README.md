@@ -1,2 +1,6 @@
 # note
-some note
+some notes
+
+- python env
+
+- hivt 
