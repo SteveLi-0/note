@@ -1,5 +1,29 @@
 # python 环境问题笔记
 
+## 0 miniconda3
+
+清华开源https://mirror.tuna.tsinghua.edu.cn/help/anaconda/
+
+anaconda-miniconda
+
+```
+wget 
+
+sudo bash Miniconda****
+
+Do you wish the installer to initialize Miniconda3 by running conda init? 
+yes
+
+conda config --set auto_activate_base false
+
+# conda cmd not found
+echo 'export PATH="/home/scarlett/miniconda3/bin:$PATH"'>> ~/.bashrc
+source ~/.bashrc
+
+```
+
+
+
 ## 1. HiVT
 
 ## 1.1 环境安装
