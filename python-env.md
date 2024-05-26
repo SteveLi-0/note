@@ -47,7 +47,8 @@ tensorboard
 train
 
 ```
-python train.py --root /home/lxx/project/argov1 --embeddsadasd
+python train.py --root /home/lxx/project/argov1 --embed_dim 64
+
 ```
 
 eval
@@ -58,6 +59,10 @@ python eval.py --root /home/lxx/project/argov1 --batch_size 32 --ckpt_path /home
 ```
 
 
+
+```
+watch -n 1 nvidia-smi
+```
 
 
 
