@@ -68,4 +68,30 @@ lat_mpc_controller.h
       - control bounds: max steer or steer rate
       -  state bounds: for incre-mpc-steer -> max steer, others -> max
     - initial mpc state: predict point error
-    - 
+
+## 1. controller
+
+CnoaLatController 类继承于 Controller 类
+
+#### Base Controller
+
+- constructor & virtual destructor
+  - destructor / constructor = default C++11/20 新特性
+- virtual = 0 
+  - Status Init()
+    - inputs: control_conf & injector (control input message)
+  - Status ComputeControlCommand()
+    - inputs: planning message, control command & control debug
+  - Status Reset()
+    - reset controller
+  - Status ResetControlStatus()
+    - reset controller status
+  - Status Name()
+    - string: controller name
+
+#### CnoaLatontroller : Controller
+
+- variables
+  - 
+  - 
+
