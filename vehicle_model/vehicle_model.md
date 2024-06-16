@@ -25,3 +25,63 @@ $$
 $$
 \delta_{ff} = \frac{mv_x^2}{RL}(-\frac{l_r}{C_f}+\frac{l_f}{C_r}-\frac{l_f}{C_r}k_3)+\frac{1}{k_1R}(L-l_rk_3)
 $$
+
+## 3. vehicle kinematic model
+
+$$
+\begin{bmatrix}
+    \dot{x} \\
+    \dot{y} \\
+    \dot{\theta} \\
+    \dot{\delta} \\
+    \dot{v} \\
+    \dot{a}
+\end{bmatrix}
+=
+\begin{bmatrix}
+    v \cos(\theta) \\
+    v \sin(\theta) \\
+    \frac{v \tan(\delta)}{L (1 + k v^2)} \\
+    u_1 \\
+    a \\
+    u_2
+\end{bmatrix}
+$$
+
+### 4. Runge-Kutta 2nd Order (RK2) Method
+
+RK2方法，也称为中点法，是一种常用的数值积分方法。公式如下：
+
+$$
+\begin{aligned}
+    k_1 &= f(t_n, y_n), \\
+    k_2 &= f(t_n + \frac{h}{2}, y_n + \frac{h}{2} k_1), \\
+    y_{n+1} &= y_n + h k_2,
+\end{aligned}
+$$
+
+其中：
+- $ t_n $ 是当前时间步
+- $ y_n $ 是当前状态
+- $ h $ 是时间步长
+- $ f $ 是状态的导数函数
+
+### 5. Runge-Kutta 4th Order (RK4) Method
+
+RK4方法是一种更高精度的数值积分方法，公式如下：
+
+$$
+\begin{aligned}
+    k_1 &= f(t_n, y_n), \\
+    k_2 &= f(t_n + \frac{h}{2}, y_n + \frac{h}{2} k_1), \\
+    k_3 &= f(t_n + \frac{h}{2}, y_n + \frac{h}{2} k_2), \\
+    k_4 &= f(t_n + h, y_n + h k_3), \\
+    y_{n+1} &= y_n + \frac{h}{6} (k_1 + 2k_2 + 2k_3 + k_4),
+\end{aligned}
+$$
+
+其中：
+- $ t_n $ 是当前时间步
+- $ y_n $ 是当前状态
+- $ h $ 是时间步长
+- $ f $ 是状态的导数函数
