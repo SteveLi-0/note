@@ -95,3 +95,10 @@ CnoaLatController 类继承于 Controller 类
   - 
   - 
 
+## 2. mpc_osqp
+```
+/common/math/MpcOsqp.h
+/common/math/MpcOsqp.cc
+```
+### 2.1 Solve()
+

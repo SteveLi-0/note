@@ -48,7 +48,51 @@ $$
 \text{cost} = \text{state\_cost} + \text{control\_cost} + \text{constraint\_cost}
 $$
 $$
-cost = \sum_{i = 0}^{n-1}{e_i^TQe_i + \lambda^T \mathbf{g} + 0.5 \mu \mathbf{g}^T \mathbf{I}_\mu \mathbf{g}} + \sum_{i = 1}^{n-1} {u_i^TRu_i} + e_N^TQ_Ne_N + 
+cost = \sum_{i = 0}^{n-1}{e_i^TQe_i + \lambda^T \mathbf{g} + 0.5 \mu \mathbf{g}^T \mathbf{I}_\mu \mathbf{g}} + \sum_{i = 1}^{n-1} {u_i^TRu_i} + e_N^TQ_Ne_N
 $$
 
-## 2. backword
+## 2. backward
+
+$$
+J = \sum_{i = 0}^{n-1}{e_i^TQe_i} + \sum_{i = 1}^{n-1} {u_i^TRu_i} + e_N^TQ_Ne_N  + \lambda^T \mathbf{g} + 0.5 \mu \mathbf{g}^T \mathbf{I}_\mu \mathbf{g}
+$$
+
+$$
+\begin{align*}
+    x_{k+1} &= f(x_k, u_k) \\
+    δx_{k+1} &= \frac{∂f}{∂x}δx_k + \frac{∂f}{∂u}δu_k \\
+    A &= \frac{∂f}{∂x},  B = \frac{∂f}{∂u}
+\end{align*}
+$$
+
+
+$$
+\begin{align*}
+    Q_x &= \frac{∂J}{∂x}|_{k} + \frac{∂f}{∂x}^{T}|_{k} \frac{∂V}{∂x}^{T}|_{k+1} \\
+    Q_u &= \frac{∂J}{∂u}|_{k} + \frac{∂f}{∂u}^{T}|_{k} \frac{∂V}{∂x}^{T}|_{k+1} \\
+    Q_{ux} &= \frac{∂^2J}{∂u∂x}|_{k} +   \frac{∂J}{∂u}|_{k} \frac{∂^2V}{∂x^2}^{T}|_{k+1} \frac{∂J}{∂x}|_{k} \\
+    Q_{xx} &= \frac{∂^2J}{∂x∂x}|_{k} +   \frac{∂J}{∂x}|_{k} \frac{∂^2V}{∂x^2}^{T}|_{k+1} \frac{∂J}{∂x}|_{k} \\
+    Q_{uu} &= \frac{∂^2J}{∂u∂u}|_{k} +   \frac{∂J}{∂u}|_{k} \frac{∂^2V}{∂x^2}^{T}|_{k+1} \frac{∂J}{∂u}|_{k}
+\end{align*}
+$$
+
+$$
+δ u^* = - Q_{uu}^{-1} (Q_{ux}δ x_k + Q_{u}) =K_k δ x_k + d_k
+$$
+
+$$
+\begin{cases}
+    K_k = - Q_{uu}^{-1}Q_{ux}\\
+    d_k = - Q_{uu}^{-1}Q_{u}
+\end{cases}
+$$
+
+$$
+\begin{cases}
+    \frac{∂V}{∂x} = Q_x + K^T Q_{uu} d + K^T Q_u + Q_{ux}^T d \\
+    \frac{∂^2V}{∂x^2} = Q_{xx} + K^T Q_{uu} K + K^T Q_{ux} + Q_{ux}^T K \\
+\end{cases}
+$$
+
+## 3. forward
+
