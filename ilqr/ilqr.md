@@ -19,6 +19,18 @@ $$
     u_2
 \end{bmatrix}
 $$
+
+$$
+\begin{bmatrix}
+1 & 0 & -dt \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) \left(v + \frac{a dt}{2}\right) & -\frac{dt^2 v \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) (\tan(\delta)^2 + 1) \left(v + \frac{a dt}{2}\right)}{2L(kv^2 + 1)} & dt \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) - dt \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) \left(\frac{dt \tan(\delta)}{2L(kv^2 + 1)} - \frac{dt k v^2 \tan(\delta)}{L(kv^2 + 1)^2}\right) \left(v + \frac{a dt}{2}\right) & \frac{dt^2 \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right)}{2} \\
+0 & 1 & dt \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) \left(v + \frac{a dt}{2}\right) & \frac{dt^2 v \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) (\tan(\delta)^2 + 1) \left(v + \frac{a dt}{2}\right)}{2L(kv^2 + 1)} & dt \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) + dt \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) \left(\frac{dt \tan(\delta)}{2L(kv^2 + 1)} - \frac{dt k v^2 \tan(\delta)}{L(kv^2 + 1)^2}\right) \left(v + \frac{a dt}{2}\right) & \frac{dt^2 \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right)}{2} \\
+0 & 0 & 1 & \frac{dt (\tan(\delta + \frac{dt u1}{2})^2 + 1) \left(v + \frac{a dt}{2}\right)}{L(k(v + \frac{a dt}{2})^2 + 1)} & \frac{dt \tan(\delta + \frac{dt u1}{2})}{L(k(v + \frac{a dt}{2})^2 + 1)} - \frac{dt k \tan(\delta + \frac{dt u1}{2})(2v + a dt) \left(v + \frac{a dt}{2}\right)}{L(k(v + \frac{a dt}{2})^2 + 1)^2} & \frac{dt^2 \tan(\delta + \frac{dt u1}{2})}{2L(k(v + \frac{a dt}{2})^2 + 1)} - \frac{dt^2 k \tan(\delta + \frac{dt u1}{2}) \left(v + \frac{a dt}{2}\right)^2}{L(k(v + \frac{a dt}{2})^2 + 1)^2} \\
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & dt \\
+0 & 0 & 0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+
 ## 2. cost
 iLQR的成本函数包含三部分：状态误差成本、控制成本和约束成本。公式如下：
 #### 状态误差成本
