@@ -65,6 +65,12 @@ $$
 \end{align*}
 $$
 
+$$
+\begin{align*}
+    \frac{∂J}{∂x} &= 2Qe + \frac{∂g}{∂x}^T(λ+I\frac{∂g}{∂x}) \\ 
+    \frac{∂J}{∂u} &= 2Ru + \frac{∂g}{∂u}^T(λ+I\frac{∂g}{∂u}) \\ 
+\end{align*}
+$$
 
 $$
 \begin{align*}
@@ -96,3 +102,34 @@ $$
 
 ## 3. forward
 
+including rollout and line search
+
+### rollout
+
+Init: 
+- nominal trajectory $ x^0_{0:N} , u^0_{0,N-1}$
+- feedback and feedfoward gains $ K_k, d_k $
+- new trajectory: $ x^1_0 = x^0_0$
+
+rollout:
+- for k in range(N):
+    - $ δx^l_k=x^l_k-x^0_k$
+    - $ u^l_k=u^0_k+K_kδx^l_k + α d_k$
+    - $ x^l_{k+1}=f(x^l_k,u^l_k)$
+- output: $ x^l_{0:N} , u^l_{0,N-1}$
+
+### line search
+bjack205:
+- rollout
+- compute $ J^l $
+- compute z:
+    - $ z = \frac{J^l - J^0}{-\Delta V (\alpha)}$
+    - $ \Delta V (\alpha) = \sum^{N-1}_{k=0} α d^T_k Q_u + α ^ 2 \frac{1}{2}d^T_k Q_{uu} d_k$
+- if z lies within $[β_1, β_2]$ usually $[1e-4, 10]$: accept output $ x^l_{0:N} , u^l_{0,N-1}$
+- else: decrease alpha by $\gamma = 0.5 $ and repeat line search
+
+w:
+- rollout
+- compute $ J^l $
+- if $ j^l \lt j^0 $: accept output
+- else: decrease alpha by $\gamma = 0.5 $ and repeat line search
