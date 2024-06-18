@@ -18,9 +18,12 @@ $$
     a \\
     u_2
 \end{bmatrix}
+=
+f(\mathbf{x}, \mathbf{u})
 $$
 
 $$
+A = \frac{∂f}{ ∂ \mathbf{x}} =
 \begin{bmatrix}
 1 & 0 & -dt \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) \left(v + \frac{a dt}{2}\right) & -\frac{dt^2 v \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) (\tan(\delta)^2 + 1) \left(v + \frac{a dt}{2}\right)}{2L(kv^2 + 1)} & dt \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) - dt \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) \left(\frac{dt \tan(\delta)}{2L(kv^2 + 1)} - \frac{dt k v^2 \tan(\delta)}{L(kv^2 + 1)^2}\right) \left(v + \frac{a dt}{2}\right) & \frac{dt^2 \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right)}{2} \\
 0 & 1 & dt \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) \left(v + \frac{a dt}{2}\right) & \frac{dt^2 v \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) (\tan(\delta)^2 + 1) \left(v + \frac{a dt}{2}\right)}{2L(kv^2 + 1)} & dt \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) + dt \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right) \left(\frac{dt \tan(\delta)}{2L(kv^2 + 1)} - \frac{dt k v^2 \tan(\delta)}{L(kv^2 + 1)^2}\right) \left(v + \frac{a dt}{2}\right) & \frac{dt^2 \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(kv^2 + 1)}\right)}{2} \\
@@ -28,6 +31,18 @@ $$
 0 & 0 & 0 & 1 & 0 & 0 \\
 0 & 0 & 0 & 0 & 1 & dt \\
 0 & 0 & 0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+$$
+B = \frac{∂f}{ ∂ \mathbf{u}} =
+\begin{bmatrix}
+0 &      0 \\
+0 &      0 \\
+\frac{dt^2 (\tan(\delta + \frac{dt u1}{2})^2 + 1) \left(v + \frac{a dt}{2}\right)}{2L(k(v + \frac{a dt}{2})^2 + 1)} &      0 \\
+dt &      0 \\
+0 & \frac{dt^2}{2} \\
+0 &     dt \\
 \end{bmatrix}
 $$
 
