@@ -88,3 +88,71 @@ $$
 - $ y_n $ 是当前状态
 - $ h $ 是时间步长
 - $ f $ 是状态的导数函数
+
+## 6. stop and go model (continuous and discreted)
+
+    参考论文：Numerically Stable Dynamic Bicycle Model for Discrete-time Control
+
+### 连续时间非线性方程
+$$
+\dot{x} = f(X, U) = 
+\begin{bmatrix}
+    u\cos(\phi) - v\sin(\phi) \\
+    u\sin(\phi) + v\cos(\phi) \\
+    \omega \\
+    a + v\omega-\frac{1}{m}F_{Y1}sin\delta \\
+    -u\omega + \frac{1}{m}(F_{Y2}cos\delta+F_{Y2}) \\
+    \frac{1}{I_z} (l_f F_{Y1}cos\delta - l_rF_{Y2})
+\end{bmatrix}
+\\ 
+$$
+
+$$
+X = 
+\begin{bmatrix}
+    x \\ y \\ \phi \\ u \\ v \\ \omega
+\end{bmatrix},
+U = 
+\begin{bmatrix}
+    a \\ \delta
+\end{bmatrix}
+$$
+
+### 数值稳定的离散时间方程
+$$
+X_{k+1} = F(X_k, U_k) =
+\begin{bmatrix}
+x_k + T_s (u_k \cos \phi_k - v_k \sin \phi_k) \\
+y_k + T_s (v_k \cos \phi_k + u_k \sin \phi_k) \\
+\phi_k + T_s \omega_k \\
+u_k + T_s a_k \\
+\frac{m u_k v_k + T_s (l_f k_f - l_r k_r) \omega_k - T_s k_f \delta_k u_k - T_s m u_k^2 \omega_k}{m u_k - T_s (k_f + k_r)} \\
+\frac{I_z u_k \omega_k + T_s (l_f k_f - l_r k_r) v_k - T_s l_f k_f \delta_k u_k}{I_z u_k - T_s (l_f^2 k_f + l_r^2 k_r)}
+\end{bmatrix}
+$$
+
+### 离散时间方程的Jacobian矩阵
+
+$$
+A = \frac{\partial F}{\partial X} = 
+\begin{bmatrix}
+1 & 0 & -T_s (v \cos(\phi) + u \sin(\phi)) & T_s \cos(\phi) & -T_s \sin(\phi) & 0 \\
+0 & 1 & T_s (u \cos(\phi) - v \sin(\phi)) & T_s \sin(\phi) & T_s \cos(\phi) & 0 \\
+0 & 0 & 1 & 0 & 0 & T_s \\
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & - \frac{T_s \delta k_f - m v + 2 T_s m \omega u}{m u - T_s (k_f + k_r)} - \frac{m (m u v + T_s \omega (k_f l_f - k_r l_r) - T_s m \omega u^2 - T_s \delta k_f u)}{(m u - T_s (k_f + k_r))^2} & \frac{m u}{m u - T_s (k_f + k_r)} & \frac{- T_s m u^2 + T_s (k_f l_f - k_r l_r)}{m u - T_s (k_f + k_r)} \\
+0 & 0 & 0 & \frac{I_z \omega - T_s \delta k_f l_f}{I_z u - T_s (k_f l_f^2 + k_r l_r^2)} - \frac{I_z (I_z \omega u + T_s v (k_f l_f - k_r l_r) - T_s \delta k_f l_f u)}{(I_z u - T_s (k_f l_f^2 + k_r l_r^2))^2} & \frac{T_s (k_f l_f - k_r l_r)}{I_z u - T_s (k_f l_f^2 + k_r l_r^2)} & \frac{I_z u}{I_z u - T_s (k_f l_f^2 + k_r l_r^2)}
+\end{bmatrix}
+$$
+
+$$
+B = \frac{\partial F}{\partial U} = 
+\begin{bmatrix}
+0 & 0 \\
+0 & 0 \\
+0 & 0 \\
+T_s & 0 \\
+0 & -\frac{T_s k_f u}{m u - T_s (k_f + k_r)} \\
+0 & -\frac{T_s k_f l_f u}{I_z u - T_s (k_f l_f^2 + k_r l_r^2)}
+\end{bmatrix}
+$$
