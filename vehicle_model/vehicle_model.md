@@ -31,6 +31,8 @@ $$
 
 ## 3. vehicle kinematic model
 
+### 连续方程
+控制量，转向角增量，加速度增量
 $$
 \begin{bmatrix}
     \dot{x} \\
@@ -51,7 +53,13 @@ $$
 \end{bmatrix}
 $$
 
-### 4. Runge-Kutta 2nd Order (RK2) Method
+### 离散方程
+RK2离散
+
+### RK2离散下的Jacobian矩阵
+
+
+## 4. Runge-Kutta 2nd Order (RK2) Method
 
 RK2方法，也称为中点法，是一种常用的数值积分方法。公式如下：
 
