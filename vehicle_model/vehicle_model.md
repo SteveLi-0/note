@@ -31,8 +31,8 @@ $$
 
 ## 3. vehicle kinematic model
 
-### 连续方程
-控制量，转向角增量，加速度增量
+### 3.1 形式一：控制量：转向角增量，加速度增量
+#### 连续时间方程
 $$
 \begin{bmatrix}
     \dot{x} \\
@@ -53,11 +53,72 @@ $$
 \end{bmatrix}
 $$
 
-### 离散方程
+#### 离散方程
 RK2离散
 
-### RK2离散下的Jacobian矩阵
+#### RK2离散下的Jacobian矩阵
+$$
+Jx = \frac{\partial f_d}{\partial x} \\ =
+\begin{bmatrix}
+1 & 0 & -dt \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) \left(v + \frac{a dt}{2}\right) & -\frac{dt^2 v \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) (\tan^2(\delta) + 1) \left(v + \frac{a dt}{2}\right)}{2L(k v^2 + 1)} & dt \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) - dt \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) \left(\frac{dt \tan(\delta)}{2L(k v^2 + 1)} - \frac{dt k v^2 \tan(\delta)}{L(k v^2 + 1)^2}\right) \left(v + \frac{a dt}{2}\right) & \frac{dt^2 \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right)}{2} \\
+0 & 1 & dt \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) \left(v + \frac{a dt}{2}\right) & \frac{dt^2 v \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) (\tan^2(\delta) + 1) \left(v + \frac{a dt}{2}\right)}{2L(k v^2 + 1)} & dt \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) + dt \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) \left(\frac{dt \tan(\delta)}{2L(k v^2 + 1)} - \frac{dt k v^2 \tan(\delta)}{L(k v^2 + 1)^2}\right) \left(v + \frac{a dt}{2}\right) & \frac{dt^2 \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right)}{2} \\
+0 & 0 & 1 & \frac{dt (\tan^2(\delta + \frac{dt u1}{2}) + 1) \left(v + \frac{a dt}{2}\right)}{L(k (v + \frac{a dt}{2})^2 + 1)} & \frac{dt \tan(\delta + \frac{dt u1}{2})}{L(k (v + \frac{a dt}{2})^2 + 1)} - \frac{dt k \tan(\delta + \frac{dt u1}{2}) (2v + a dt) \left(v + \frac{a dt}{2}\right)}{L(k (v + \frac{a dt}{2})^2 + 1)^2} & \frac{dt^2 \tan(\delta + \frac{dt u1}{2})}{2L(k (v + \frac{a dt}{2})^2 + 1)} - \frac{dt^2 k \tan(\delta + \frac{dt u1}{2}) \left(v + \frac{a dt}{2}\right)^2}{L(k (v + \frac{a dt}{2})^2 + 1)^2} \\
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & dt \\
+0 & 0 & 0 & 0 & 0 & 1
+\end{bmatrix}
+$$
 
+$$
+J_u = \frac{\partial f_d}{\partial u} \\ =
+\begin{bmatrix}
+0 & 0 \\
+0 & 0 \\
+\frac{dt^2 (\tan^2\left(\delta + \frac{dt u_1}{2}\right) + 1) \left(v + \frac{a dt}{2}\right)}{2L \left(k \left(v + \frac{a dt}{2}\right)^2 + 1\right)} & 0 \\
+dt & 0 \\
+0 & \frac{dt^2}{2} \\
+0 & dt \\
+\end{bmatrix}
+$$
+
+### 3.2 形式二 控制量：转向角增量
+#### 连续方程
+$$
+\begin{bmatrix}
+    \dot{x} \\
+    \dot{y} \\
+    \dot{\theta} \\
+    \dot{\delta} \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+    v \cos(\theta) \\
+    v \sin(\theta) \\
+    \frac{v \tan(\delta)}{L (1 + k v^2)} \\
+    u_1 \\
+\end{bmatrix}
+$$
+#### RK2离散
+#### RK2下Jacobian矩阵
+$$
+J_x = \frac{\partial f_d}{\partial x} \\ =
+\begin{bmatrix}
+1 & 0 & -dt v \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) & -\frac{dt^2 v^2 \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) (\tan^2(\delta) + 1)}{2L(k v^2 + 1)} \\
+0 & 1 & dt v \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) & \frac{dt^2 v^2 \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) (\tan^2(\delta) + 1)}{2L(k v^2 + 1)} \\
+0 & 0 & 1 & \frac{dt v (\tan^2(\delta + \frac{dt u_1}{2}) + 1)}{L(k v^2 + 1)} \\
+0 & 0 & 0 & 1 \\
+\end{bmatrix}
+$$
+
+$$
+J_u = \frac{\partial f_d}{\partial u} \\ =
+\begin{bmatrix}
+0 \\
+0 \\
+\frac{dt^2 v (\tan^2\left(\delta + \frac{dt u_1}{2}\right) + 1)}{2L(k v^2 + 1)} \\
+dt \\
+\end{bmatrix}
+$$
 
 ## 4. Runge-Kutta 2nd Order (RK2) Method
 
