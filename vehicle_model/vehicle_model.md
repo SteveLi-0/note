@@ -58,7 +58,7 @@ RK2离散
 
 #### RK2离散下的Jacobian矩阵
 $$
-Jx = \frac{\partial f_d}{\partial x} \\ =
+J_x = \frac{\partial f_d}{\partial x} \\ =
 \begin{bmatrix}
 1 & 0 & -dt \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) \left(v + \frac{a dt}{2}\right) & -\frac{dt^2 v \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) (\tan^2(\delta) + 1) \left(v + \frac{a dt}{2}\right)}{2L(k v^2 + 1)} & dt \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) - dt \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) \left(\frac{dt \tan(\delta)}{2L(k v^2 + 1)} - \frac{dt k v^2 \tan(\delta)}{L(k v^2 + 1)^2}\right) \left(v + \frac{a dt}{2}\right) & \frac{dt^2 \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right)}{2} \\
 0 & 1 & dt \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) \left(v + \frac{a dt}{2}\right) & \frac{dt^2 v \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) (\tan^2(\delta) + 1) \left(v + \frac{a dt}{2}\right)}{2L(k v^2 + 1)} & dt \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) + dt \cos\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right) \left(\frac{dt \tan(\delta)}{2L(k v^2 + 1)} - \frac{dt k v^2 \tan(\delta)}{L(k v^2 + 1)^2}\right) \left(v + \frac{a dt}{2}\right) & \frac{dt^2 \sin\left(\theta + \frac{dt v \tan(\delta)}{2L(k v^2 + 1)}\right)}{2} \\
