@@ -168,3 +168,11 @@ a feasible initial guess is important for the convergence of the algorithm
 - ning wu: 
     - 时空优化非凸性非常强，需要给多个 warm start 选最好的一个或者同时并行优化多条轨迹并选择最好的一个来保证局部最优解的质量足够好。常见的warm start方法有：上一帧最优解、lqr tracker、 pp、不同参数的pid。
     - 复用上一帧的最优解，可以假设是对齐的。也可以通过上一帧的结果插值来找到当前帧的匹配点。如果违反约束那就通过别的warm start来初始化。对于时空联合优化问题，一条 warm start 是不够的。
+
+### 4.1 implement
+
+- LQR: done
+- reuse last frame: done
+- const control input: todo
+- no control input: todo
+- compare all the guess and choose the best one: todo
