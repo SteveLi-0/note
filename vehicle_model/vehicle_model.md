@@ -37,8 +37,8 @@ $$
 \frac{\delta_{sw}(s)}{\delta_{cmd}(s)} = G(s)=\frac K{\tau s+1}
 $$
 $$
-\tau\dot{\delta}_{sw}(t)+\delta_{sw}(t)=K\delta_{sw}(t) \\
-\dot{\delta}_{sw}(t) = -\frac{1}{\tau}\delta_{sw}(t)+\frac{K}{\tau}\delta_{sw}(t)
+\tau\dot{\delta}_{sw}(t)+\delta_{sw}(t)=K\delta_{cmd}(t) \\
+\dot{\delta}_{sw}(t) = -\frac{1}{\tau}\delta_{sw}(t)+\frac{K}{\tau}\delta_{cmd}(t)
 $$
 
 #### 积分环节
