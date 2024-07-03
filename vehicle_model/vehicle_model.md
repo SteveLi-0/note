@@ -29,6 +29,48 @@ $$
 \delta_{ff} = \frac{mv_x^2}{RL}(-\frac{l_r}{C_f}+\frac{l_f}{C_r}-\frac{l_f}{C_r}k_3)+\frac{1}{k_1R}(L-l_rk_3)
 $$
 
+### 2.1 转向特性建模
+
+#### 一阶惯性
+将转向指令和转向响应之间建模成一阶惯性环节
+$$
+\frac{\delta_{sw}(s)}{\delta_{cmd}(s)} = G(s)=\frac K{\tau s+1}
+$$
+$$
+\tau\dot{\delta}_{sw}(t)+\delta_{sw}(t)=K\delta_{sw}(t) \\
+\dot{\delta}_{sw}(t) = -\frac{1}{\tau}\delta_{sw}(t)+\frac{K}{\tau}\delta_{sw}(t)
+$$
+
+#### 积分环节
+转向速率和转向指令之间是积分环节
+$$
+\dot{\delta}_{cmd} = \dot{\delta} = u
+$$
+
+#### 状态空间表达式
+
+$$
+\begin{bmatrix} \dot{\delta}_{sw} \\ \dot{\delta}_{cmd} \end{bmatrix} = 
+\begin{bmatrix} -\frac{1}{\tau} & \frac{K}{\tau} \\ 0 & 0 \end{bmatrix} 
+\begin{bmatrix} {\delta}_{sw} \\ {\delta}_{cmd} \end{bmatrix} +
+\begin{bmatrix} 0 \\ 1 \end{bmatrix} u
+$$
+
+### 2.2 包含转向延迟特性的 linear 2 dof error model
+$$
+\frac{d}{dt}\begin{bmatrix} e_d \\ \dot{e_d} \\ e_\psi \\ \dot{e_\psi} \\ \delta_{sw} \\ \delta_{cmd} \end{bmatrix} = \begin{bmatrix} 
+0 & 1 & 0 & 0 & 0 & 0 \\
+0 & \frac{C_f+C_r}{mv_x} & -\frac{C_f+C_r}{m} & \frac{C_fl_f - C_rl_r}{mv_x} & -\frac{C_f}{m} & 0\\
+0 & 0 & 0 & 1 & 0 & 0\\
+0 & \frac{C_fl_f - C_rl_r}{I_zv_x} & -\frac{C_fl_f - C_rl_r}{I_z} & \frac{C_fl_f^2 + C_rl_r^2}{I_zv_x} & -\frac{C_fl_f}{I_z } & 0 \\
+0 & 0 & 0 & 0 & -\frac{1}{\tau} & \frac{K}{\tau} \\
+0 & 0 & 0 & 0 & 0 & 0 
+ \end{bmatrix}
+\begin{bmatrix} e_d \\ \dot{e_d} \\ e_\psi \\ \dot{e_\psi} \\ \delta_{sw} \\ \delta_{cmd} \end{bmatrix} \\ + 
+\begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1  \end{bmatrix} \dot{\delta}_{cmd}  + 
+\begin{bmatrix} 0 \\  \frac{C_fl_f - C_rl_r}{mv_x} - v_x \\ 0 \\ \frac{C_fl_f^2 + C_rl_r^2}{I_zv_x} \\ 0 \\ 0 \end{bmatrix} \dot{\psi}_{des}
+$$
+
 ## 3. vehicle kinematic model
 
 ### 3.1 形式一：控制量：转向角增量，加速度增量
