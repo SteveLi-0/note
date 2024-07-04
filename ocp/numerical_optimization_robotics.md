@@ -90,12 +90,34 @@ $$\begin{aligned}
 ### 5. Convex Functions
 
 Jensen's inequality
+$$f(\theta x+(1-\theta)y)\leq\theta f(x)+(1-\theta)f(y)$$
 
-Epigraph 
+Epigraph：上方图
+$$\mathrm{epi}(f)=\{(x,y)\mid f(x)\leq y\}$$
+convex function == convex epigraph
 
 why convex functions?
+- 凸函数有凸的次水平集
+- 凸函数的性质相对容易保持
+    - 拟凸函数的和不一定是凸的
+- 凸函数任何局部最优解就是全局最优解
+- 凸函数在局部极小值附近是局部凸的
+- 凸函数的许多运算是保凸的：
+    - 非负加权和
+    - 仿射变换
+    - 绝对值
+    - 范数
+    - 最大特征值
+    - trace
+    - 线性运算
 
 #### convex functions property
+
+- 凸函数在线性近似的上方
+- 一阶导数为0 就是最优解（只对凸函数成立）
+- 如果光滑函数对于任何X的hessian是半正定的，那么它是凸的
+- 对于非凸函数，极小值点的hessian是半正定的
+- The Hessian is a good local model of a smooth function
 
 ### 6. Unconstrained Optimization for Nonconvex Functions
 
