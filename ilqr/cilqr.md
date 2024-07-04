@@ -206,7 +206,7 @@ p_{k}& =Q_x+K_k^TQ_{uu}d_k+K_k^TQ_u+Q_{xu}d_k \\
 \Delta V_{k}& =d_k^TQ_u+\frac{1}{2}d_k^TQ_{uu}d_k. 
 \end{aligned}$$
 ## 3. forward pass
-在backward pass中，我们从终端状态计算最优控制率，在forward pass中，基于上一帧/初始状态的nominal trajectory和当前车辆的状态，通过dynamics前向推演出新的nominal trajectory
+在backward pass中，我们从终端状态计算最优控制率，在forward pass中，基于上一帧/初始状态的nominal trajectory和当前车辆的状态，通过dynamics前向推演出新的nominal trajectory。
 $$\begin{aligned}
 \delta x_{k}=& \bar{x}_{k}-x_{k} \\
 \delta u_{k}=& K_{k}\delta x_{k}+\alpha d_{k} \\
@@ -214,4 +214,24 @@ $$\begin{aligned}
 \bar{x}_{k+1}=& f(\bar{x}_k,\bar{u}_k) 
 \end{aligned}$$
 ### 3.1 line search
+在非线性优化中，line search 用来让 cost 充分下降： armijo conditon 和 AL_ilqr_tutorial.pdf 中提到的 line search 准则（下简称BJack）
+
+armijo condition:
+
+$$\begin{aligned}&x^{k+1}=x^k+\tau d \\
+&d=-\nabla f(x^k)\end{aligned}$$
+$$\tau\in\left\{\alpha\mid f(x^k)-f(x^k+\alpha d)\geq-c\cdot\alpha d^\mathrm{T}\nabla f(x^k)\right\}$$
+
+bjack condition:
+$$z=\frac{J(X,U)-J(\bar{X},\bar{U})}{-\Delta V(\alpha)}$$
+$$\Delta V(\alpha)=\sum_{k=0}^{N-1}\alpha d_k^TQ_u+\alpha^2\frac{1}{2}d_k^TQ_{uu}d_k$$
+
+z 的意义是 cost 真实下降量与 cost 期望下降量之比。如果 $ z \in [\beta_1, \beta_2] $ 通常 $[1e-4, 10]$ ，rollout 的轨迹可以被接受，如果不被接受，则减小 $\alpha$，$\alpha = \gamma \alpha(\gamma < 1)$.
+
+### 3.2 regularization
+
+cost blow up：如果 cost 多次迭代没有降低，或者违反约束造成 cost 爆炸，则进行正则化。
+正则化就是在 backward 之前，对 $Q_{uu}$ 进行正则化。正则项 $\rho$ 增大，则 $Q_{uu}$ 越来越接近 Identity matrix，则高斯牛顿法越接近牛顿梯度下降。
+如果$Q_{uu}$不满秩，则也需要加强正则化，并重新进行反向传播。
+
 ## 4. algorithm
