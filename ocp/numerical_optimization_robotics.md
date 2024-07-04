@@ -27,24 +27,65 @@ default assumptions:
 
 ### 3.Convex sets
 
-definition
+#### definition
 
-examples
+A set is convex if all **convex combinations** of its points are also in the set.
+
+convex cobinations: $$ \sum \theta_1 x_1 + \theta _2 x_2 + \theta _3 x_3 $$ $$ \sum \theta _i = 1 $$
+
+#### examples
+
+超平面、版空间、球、多项式
+
+Cone 锥不一定是凸的
+
+Cone：$ x \in C \Rightarrow ax \in C, \forall a \geq 0 $
+
+Second-order cone SOC: $ C_2 = \left\{ (x, t) \mid \|x\| \leq t \right\} \in \mathbb{R}^{n+1} $ 是凸的
+
+Semi-definite cone: $\mathcal{S}_+^n=\left\{A\in\mathbb{R}^{n\times n}\mid A=A^T,A\succeq0\right\}$ 是凸的
+
+#### properties of convex sets
+
+保凸性：
+- The intersection of convex sets is convex：多面体
+- set sum $A+B=\{x+y\mid x\in A,y\in B\}$
+- set product $A\times B=\{(x, y)\mid x\in A,y\in B\}$
 
 ### 4. hign order info of functions
 
 Function
-
+$$f(x)=f(x_1,x_2,x_3)$$
 Gradient
+$$\nabla f(x)=\begin{pmatrix}\partial_1f(x)\\\partial_2f(x)\\\partial_3f(x)\end{pmatrix}$$
 
-Hessian
+Hessian: Symmetric for smooth function 对于光滑函数是对称的
+$$\nabla^2f(x)=\begin{pmatrix}\partial_1^2f(x)&\partial_1\partial_2f(x)&\partial_1\partial_3f(x)\\\partial_2\partial_1f(x)&\partial_2^2f(x)&\partial_2\partial_3f(x)\\\partial_3\partial_1f(x)&\partial_3\partial_2f(x)&\partial_3^2f(x)\end{pmatrix}$$
 
-Approx at zero
+Approximation
+$$f(x)=f(x-x_0)+x^T\nabla f(x-x_0)+\frac12x^T\nabla^2f(x-x_0)x+O\left(\left\|x-x_0\right\|^3\right)$$
 
 Jacobian
 
+The extension of the gradient to higher order.
+$$f(x): \mathbb R^n \to \mathbb R^m $$
+$$f'(x)=\frac{df}{dx^T}=\begin{pmatrix}\frac{\partial f_1}{\partial x_1}&\frac{\partial f_1}{\partial x_2}&\cdots&\frac{\partial f_1}{\partial x_n}\\\frac{\partial f_2}{\partial x_1}&\frac{\partial f_2}{\partial x_2}&\cdots&\frac{\partial f_2}{\partial x_n}\\\vdots&\vdots&\ddots&\vdots\\\frac{\partial f_m}{\partial x_1}&\frac{\partial f_m}{\partial x_2}&\cdots&\frac{\partial f_m}{\partial x_n}\end{pmatrix}$$
+
 #### useful notation of differential
 https://en.wikipedia.org/wiki/Matrix_calculus
+
+$$\begin{aligned}
+&dA=0 \\
+&d(\alpha X)=\alpha(dX) \\
+&d(AXB)=A(dX)B \\
+&d(X+Y)=dX+dY \\
+&d(X^\top)=(dX)^\top \\
+&d(XY)=(dX)Y+X(dY) \\
+&d\langle X,Y\rangle=\langle dX,Y\rangle+\langle X,dY\rangle \\
+&d\biggl(\frac{X}{\phi}\biggr)=\frac{\phi dX-(d\phi)X}{\phi^{2}} \\
+&d(tr(X)) = I \\
+&df(g(x))=\frac{df}{dg}\cdot dg(x)
+\end{aligned}$$
 
 ### 5. Convex Functions
 
