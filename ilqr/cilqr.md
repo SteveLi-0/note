@@ -179,18 +179,46 @@ $$\delta Q_k=\frac{1}{2}\begin{bmatrix}\delta x_k\\\delta u_k\end{bmatrix}^T\beg
 
 $P_k$和$p_k$ 分别是 k 时刻 cost-to-go function 的 Hessian 和 gradient：
 
+矩阵维度
+$$
+n_s = \text{state dimension} \\
+n_u = \text{control dimension} \\
+n_c = \text{constraint dimension} \\
+$$
+
+$$
+V_x:        n_s \times 1 \\
+V_{xx}:       n_s \times n_s \\ 
+Q_x:       n_s \times 1 \\ 
+Q_{xx}:       n_s \times n_s \\ 
+Q_{uu}:       n_u \times n_u \\ 
+Q_{ux}:       n_u \times n_s \\ \
+$$
+
+$$\frac{∂\ell}{∂x}: n_s \times 1$$
+$$ \frac{∂\ell}{∂u}: n_s \times n_s $$
+$$\frac{∂^2\ell}{∂x∂x}: n_s \times n_s$$
+$$\frac{∂^2\ell}{∂u∂u}: n_u \times n_u$$
+$$\frac{∂^2\ell}{∂u∂x}: n_u \times n_s$$
+
+$$\lambda: n_c \times 1$$
+$$I_{\mu} : n_c \times n_c $$
+$$c(x): n_c \times 1$$
+
+
 当 $k=N$ 时：
 $$p_{N}=\frac{∂V}{∂x}|_{N}=(\ell_N)_x+(c_N)_x^T(\lambda+I_{\mu_N}c_N)$$
+$$n_s\times1=n_s\times1+ (n_s\times n_c) \times [(n_c \times 1) + (n_c \times n_c) \times (n_c \times 1)]$$
 $$P_{N}=\frac{∂^2V}{∂x^2}|_{N}=(\ell_N)_{xx}+(c_N)_x^TI_{\mu_N}(c_N)_x$$
 
 当 $k<N$ 时：
 $$
 \begin{align*}
-    Q_x &= \frac{∂J}{∂x}|_{k} + \frac{∂f}{∂x}^{T}|_{k} \frac{∂V}{∂x}^{T}|_{k+1} + (c_k)_x^T(\lambda+I_{\mu_N}c_k) \\
-    Q_u &= \frac{∂J}{∂u}|_{k} + \frac{∂f}{∂u}^{T}|_{k} \frac{∂V}{∂x}^{T}|_{k+1} + (c_k)_u^T(\lambda+I_{\mu_N}c_k) \\
-    Q_{ux} &= \frac{∂^2J}{∂u∂x}|_{k} +   \frac{∂J}{∂u}|_{k} \frac{∂^2V}{∂x^2}^{T}|_{k+1} \frac{∂J}{∂x}|_{k} + (c_k)_u^TI_{\mu_N}(c_k)_x\\
-    Q_{xx} &= \frac{∂^2J}{∂x∂x}|_{k} +   \frac{∂J}{∂x}|_{k} \frac{∂^2V}{∂x^2}^{T}|_{k+1} \frac{∂J}{∂x}|_{k} + (c_k)_x^TI_{\mu_N}(c_N)_x \\
-    Q_{uu} &= \frac{∂^2J}{∂u∂u}|_{k} +   \frac{∂J}{∂u}|_{k} \frac{∂^2V}{∂x^2}^{T}|_{k+1} \frac{∂J}{∂u}|_{k} + (c_k)_u^TI_{\mu_N}(c_k)_u
+    Q_x &= \frac{∂\ell}{∂x}|_{k} + \frac{∂f}{∂x}^{T}|_{k} \frac{∂V}{∂x}^{T}|_{k+1} + (c_k)_x^T(\lambda+I_{\mu_N}c_k) \\
+    Q_u &= \frac{∂\ell}{∂u}|_{k} + \frac{∂f}{∂u}^{T}|_{k} \frac{∂V}{∂x}^{T}|_{k+1} + (c_k)_u^T(\lambda+I_{\mu_N}c_k) \\
+    Q_{ux} &= \frac{∂^2\ell}{∂u∂x}|_{k} +   \frac{∂J}{∂u}|_{k} \frac{∂^2V}{∂x^2}^{T}|_{k+1} \frac{∂J}{∂x}|_{k} + (c_k)_u^TI_{\mu_N}(c_k)_x\\
+    Q_{xx} &= \frac{∂^2\ell}{∂x∂x}|_{k} +   \frac{∂J}{∂x}|_{k} \frac{∂^2V}{∂x^2}^{T}|_{k+1} \frac{∂J}{∂x}|_{k} + (c_k)_x^TI_{\mu_N}(c_k)_x \\
+    Q_{uu} &= \frac{∂^2\ell}{∂u∂u}|_{k} +   \frac{∂J}{∂u}|_{k} \frac{∂^2V}{∂x^2}^{T}|_{k+1} \frac{∂J}{∂u}|_{k} + (c_k)_u^TI_{\mu_N}(c_k)_u
 \end{align*}
 $$
 
