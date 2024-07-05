@@ -263,3 +263,27 @@ cost blow up：如果 cost 多次迭代没有降低，或者违反约束造成 c
 如果$Q_{uu}$不满秩，则也需要加强正则化，并重新进行反向传播。
 
 ## 4. algorithm
+
+**Algorithm 1 Backward Pass**
+1. compute $p_N,P_N$
+2. for k = N-1, ..., 0,
+    1. compute $Q_x,Q_u, Q_{xx},Q_{uu}, Q_{ux}$
+    2. if $Q_{uu} > 0$
+        1. compute $K, d, \Delta V$
+    3. else
+        1. Increase $\rho$, go to 2.
+3. return $K, d, \Delta V$
+
+**Algorithm 2 Forward Pass**
+1. Initialize $\bar{x}_0 = x_0, alpha=1,J$
+2. for k = 0, ..., N-1
+    1. $u_k = \bar{u}_k + K_k(x - \bar{x}_k + \alpha d_k) $
+    2. $x_{k+1}=f(x_k,u_k)$
+3. $J = cost(x,u)$
+4. if J satisfies line search condition
+    1. $X\leftarrow \bar{X},U\leftarrow \bar{U}$
+5. else
+    1. reduce $\alpha$, goto 2.
+6. return $X,U,J$
+
+**Algorith 3 ILQR**
