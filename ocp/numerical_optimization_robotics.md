@@ -35,7 +35,7 @@ convex cobinations: $$ \sum \theta_1 x_1 + \theta _2 x_2 + \theta _3 x_3 $$ $$ \
 
 #### examples
 
-超平面、版空间、球、多项式
+超平面、半空间、球、多项式
 
 Cone 锥不一定是凸的
 
@@ -52,7 +52,7 @@ Semi-definite cone: $\mathcal{S}_+^n=\left\{A\in\mathbb{R}^{n\times n}\mid A=A^T
 - set sum $A+B=\{x+y\mid x\in A,y\in B\}$
 - set product $A\times B=\{(x, y)\mid x\in A,y\in B\}$
 
-### 4. hign order info of functions
+### 4. high order info of functions
 
 Function
 $$f(x)=f(x_1,x_2,x_3)$$
