@@ -187,28 +187,27 @@ n_c = \text{constraint dimension} \\
 $$
 
 $$
-V_x:        n_s \times 1 \\
-V_{xx}:       n_s \times n_s \\ 
-Q_x:       n_s \times 1 \\ 
-Q_{xx}:       n_s \times n_s \\ 
-Q_{uu}:       n_u \times n_u \\ 
-Q_{ux}:       n_u \times n_s \\ \
+V_x:        n_s \times 1 ,
+V_{xx}:       n_s \times n_s \\
+Q_x:       n_s \times 1 ,
+Q_{xx}:       n_s \times n_s ,
+Q_{uu}:       n_u \times n_u ,
+Q_{ux}:       n_u \times n_s 
 $$
 
-$$\frac{∂\ell}{∂x}: n_s \times 1$$
-$$ \frac{∂\ell}{∂u}: n_s \times n_s $$
-$$\frac{∂^2\ell}{∂x∂x}: n_s \times n_s$$
-$$\frac{∂^2\ell}{∂u∂u}: n_u \times n_u$$
-$$\frac{∂^2\ell}{∂u∂x}: n_u \times n_s$$
+$$\frac{∂\ell}{∂x}: n_s \times 1,
+\frac{∂\ell}{∂u}: n_s \times n_s \\
+\frac{∂^2\ell}{∂x∂x}: n_s \times n_s,
+\frac{∂^2\ell}{∂u∂u}: n_u \times n_u,
+\frac{∂^2\ell}{∂u∂x}: n_u \times n_s$$
 
-$$\lambda: n_c \times 1$$
-$$I_{\mu} : n_c \times n_c $$
-$$c(x): n_c \times 1$$
+$$\lambda: n_c \times 1,
+I_{\mu} : n_c \times n_c,
+c(x): n_c \times 1$$
 
 
 当 $k=N$ 时：
 $$p_{N}=\frac{∂V}{∂x}|_{N}=(\ell_N)_x+(c_N)_x^T(\lambda+I_{\mu_N}c_N)$$
-$$n_s\times1=n_s\times1+ (n_s\times n_c) \times [(n_c \times 1) + (n_c \times n_c) \times (n_c \times 1)]$$
 $$P_{N}=\frac{∂^2V}{∂x^2}|_{N}=(\ell_N)_{xx}+(c_N)_x^TI_{\mu_N}(c_N)_x$$
 
 当 $k<N$ 时：
@@ -222,7 +221,7 @@ $$
 \end{align*}
 $$
 
-此处省略$\delta u^*_k$的推导过程，由两部分组成：反馈和前馈。为了保证正则性，需要对$Q_{uu}$进行正则化。
+此处省略$\delta u^*_k$的推导过程，由两部分组成：反馈和前馈。为了保证正则性，需要对$Q_{uu}$进行正则化。（在cmu16 745 中，对 cost to go 的 Hessian 进行正则化）
 $$\delta u_{k}^{*}=-(Q_{uu}+\rho I)^{-1}(Q_{ux}\delta x_{k}+Q_{u})\equiv K_{k}\delta x_{k}+d_{k}$$
 $$K_{k} = -(Q_{uu}+\rho I)^{-1}Q_{ux}$$
 $$d_{k} = -(Q_{uu}+\rho I)^{-1}Q_{u}$$
@@ -258,11 +257,30 @@ z 的意义是 cost 真实下降量与 cost 期望下降量之比。如果 $ z \
 
 ### 3.2 regularization
 
-cost blow up：如果 cost 多次迭代没有降低，或者违反约束造成 cost 爆炸，则进行正则化。
-正则化就是在 backward 之前，对 $Q_{uu}$ 进行正则化。正则项 $\rho$ 增大，则 $Q_{uu}$ 越来越接近 Identity matrix，则高斯牛顿法越接近牛顿梯度下降。
-如果$Q_{uu}$不满秩，则也需要加强正则化，并重新进行反向传播。
+1. 如果 cost 多次迭代没有降低，或者违反约束造成 cost 爆炸，则进行正则化。通过提升$\rho$，**重新backward pass**。
+2. 正则化就是在 backward 之前，对 $Q_{uu}$ 进行正则化。正则项 $\rho$ 增大，则 $Q_{uu}$ 越来越接近 Identity matrix，则高斯牛顿法越接近牛顿梯度下降。
+3. 如果在backward pass 的过程中$Q_{uu}$不满秩，则也需要加强正则化，**并重新进行反向传播**。
+4. 如果梯度下降方向不正确，通常是Quu矩阵不满秩的缘故。
+5. 如果 cost 多次迭代没有降低，还可能是解进入了local minima，需要重新初始化初始解，并**加入随机的噪声**让解离开local minima。
 
-## 4. algorithm
+#### cmu16-745中提到的正则化方法
+在cmu16-745中，使用正则化方法是对 cost to go 的 Hessian 正则化，而不是仅仅对 $Q_{uu}$ 正则化。
+
+```
+β = 0.1
+# regularization操作，这里实际上是对V(x)进行正则化，而不是S(x,u)
+while !isposdef(Symmetric([Gxx Gxu; Gux Guu]))  #保证Hessian矩阵的正定从而保证J的下降
+    Gxx += A'*β*I*A     
+    Guu += B'*β*I*B
+    Gxu += A'*β*I*B
+    Gux += B'*β*I*A
+    β = 2*β
+    #display("regularizing G")
+    #display(β)
+end
+```
+
+## 4. Algorithm
 
 **Algorithm 1 Backward Pass**
 1. compute $p_N,P_N$
@@ -287,3 +305,14 @@ cost blow up：如果 cost 多次迭代没有降低，或者违反约束造成 c
 6. return $X,U,J$
 
 **Algorith 3 ILQR**
+1. Initialize $x_0,U, tolerance$
+2. compute $X = f(x_0, U)$
+3. do
+   1. $J = cost(X,U)$
+   2. do
+      1. $J^- = J$
+      2. K, d, $\Delta V$ = backward pass(X, U)
+      3. X, U, J = forward pass(X, U, K, d, $\Delta V$, $J^-$)
+   3. while $|J-J^-| > tolerance$
+4. return X, U, J
+   
