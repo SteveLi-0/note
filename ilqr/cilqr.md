@@ -280,7 +280,24 @@ while !isposdef(Symmetric([Gxx Gxu; Gux Guu]))  #保证Hessian矩阵的正定从
 end
 ```
 
-## 4. Algorithm
+## 4. multipliers update
+前文提到ALM的求解过程：
+
+1. holding $\lambda$, $\mu$ constant, solving $min_x\mathcal{L}(x,\lambda,\mu)$
+2. update $\lambda$ and $\mu$
+$$\lambda_i^+=\begin{cases}\lambda_i+\mu_ic_i(x^*)&i\in\mathcal{E}\\\max(0,\lambda_i+\mu_ic_i(x^*)&i\in\mathcal{I},\end{cases}$$
+$$\mu^+=\phi\mu, \phi > 1$$
+1. check constraint convergence
+2. if tolerance not met, go to step 1
+
+在内循环计算收敛后，乘子更新规则如下：
+
+$$\lambda_{k_i}^+=\begin{cases}\lambda_{k_i}+\mu_{k_i}c_{k_i}(x_k^*,u_k^*)&i\in\mathcal{E}_k\\\max(0,\lambda_{k_i}+\mu_{k_i}c_{k_i}(x_k^*,u_k^*))&i\in\mathcal{I}_k,\end{cases}$$
+$$\mu^+=\phi\mu, \phi > 1$$
+
+相比很多启发式更新方法，最实际有效的更新方法就是每次外循环迭代都更新一次乘子。
+
+## 5. Algorithm
 
 **Algorithm 1 Backward Pass**
 1. compute $p_N,P_N$
@@ -316,3 +333,15 @@ end
    3. while $|J-J^-| > tolerance$
 4. return X, U, J
    
+**Algorithm 4 AL ILQR**
+1. Initialize $x_0,U, \lambda, \mu, tolerance$
+2. set $\phi > 1$
+3. compute initial trajectory: $X = f(x_0, U)$
+4. repeat outer loop (Argumented Largrangian Method)
+   1. repeat inner loop (ilqr loop)
+      1. backward pass
+      2. forward pass
+   2. until convergence
+   3. update $\lambda, \mu$
+5. until no constraints violation
+6. return $X, U, J$
