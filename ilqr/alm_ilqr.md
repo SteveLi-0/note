@@ -40,5 +40,28 @@ $$
 #### obstacle constraints
 The core of the collision avoidance constraints is the distance from ego vehicleto the polygon.
 The distance is Eucledian distance.
+$$R_{obs} - \sqrt{(x - x_{obs})^2 + (y - y_{obs})^2} < 0$$
 
+#### all the constraints
 
+$$
+\begin{bmatrix}
+x - x_{max} \\
+y - y_{max} \\
+\phi - \phi_{max} \\
+u - u_{max} \\
+v - v_{max} \\
+\omega - \omega_{max} \\
+x_{min} - x \\
+y_{min} - y \\
+\phi_{min} - \phi \\
+u_{min} - u \\
+v_{min} - v \\
+\omega_{min} - \omega \\
+a - a_{max} \\
+\delta - \delta_{max} \\
+a_{min} - a \\
+\delta_{min} - \delta \\
+R_{obs} - \sqrt{(x - x_{obs})^2 + (y - y_{obs})^2} < 0
+\end{bmatrix}
+$$
