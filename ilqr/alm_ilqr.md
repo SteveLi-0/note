@@ -1,4 +1,5 @@
 # ALM ilqr
+not good
 ## scope
 This document describes the implementation of an al_ilqr algorithm for trajectory tracking problem with state-input constraints and obstacle avoidance constraints. To simplify the problem, we assume that the vehicle and obstacle is a mass point and the distance between the vehicle and obstacle should not be less than a constant.
 
