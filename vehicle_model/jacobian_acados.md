@@ -100,3 +100,13 @@ print("Jacobian of discrete f with respect to u at x={}, u={}:".format(x_val, u_
 print(J_fu_val)
 
 ```
+
+casadi api解释
+```
+f_func = Function('f', [X, U], [f])
+```
+'f': 函数的名称，可以随意命名。
+[X, U]: 输入变量的列表，这里包括状态变量 X 和控制变量 U。
+[f]: 输出变量的列表，这里是动力学方程 f。
+这个函数定义了一个新的 CasADi 函数 f_func，该函数的输入是状态变量 X 和控制变量 U，输出是动力学方程 f 的结果。
+

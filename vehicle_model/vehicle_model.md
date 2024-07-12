@@ -83,9 +83,7 @@ $$
     \dot{\delta} \\
     \dot{v} \\
     \dot{a}
-\end{bmatrix}
-=
-\begin{bmatrix}
+\end{bmatrix} = \begin{bmatrix}
     v \cos(\theta) \\
     v \sin(\theta) \\
     \frac{v \tan(\delta)}{L (1 + k v^2)} \\
@@ -131,9 +129,7 @@ $$
     \dot{y} \\
     \dot{\theta} \\
     \dot{\delta} \\
-\end{bmatrix}
-=
-\begin{bmatrix}
+\end{bmatrix} = \begin{bmatrix}
     v \cos(\theta) \\
     v \sin(\theta) \\
     \frac{v \tan(\delta)}{L (1 + k v^2)} \\
@@ -265,5 +261,48 @@ B = \frac{\partial F}{\partial U} =
 T_s & 0 \\
 0 & -\frac{T_s k_f u}{m u - T_s (k_f + k_r)} \\
 0 & -\frac{T_s k_f l_f u}{I_z u - T_s (k_f l_f^2 + k_r l_r^2)}
+\end{bmatrix}
+$$
+
+## 7. 2dof dynamics
+
+x,y is the position of center of mass
+
+$$
+X = 
+\begin{bmatrix} 
+v_x & v_y & heading & yawrate & x & y
+\end{bmatrix} ^ T
+$$
+
+$$
+U = \begin{bmatrix}
+    \delta & acc
+\end{bmatrix} ^ T
+$$
+
+$$
+\dot{X} = AX + BU
+$$
+
+$$
+A = \begin{bmatrix} 
+0 & 0 & 0 & 0 & 0 & 0 \\
+0 & -\frac{C_f+C_r}{mv_x} & 0 & -\frac{C_fl_f - C_rl_r}{mv_x} - v_x & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & -\frac{C_fl_f - C_rl_r}{I_zv_x} & 0 & -\frac{C_fl_f^2 + C_rl_r^2}{I_zv_x} & 0 & 0 \\
+cos(heading) & -sin(heading) & 0 & 0 & 0 & 0 \\
+sin(heading) & cos(heading) & 0 & 0 & 0 & 0 \\
+\end{bmatrix}
+$$
+
+$$
+B = \begin{bmatrix}
+0 & 1 \\
+\frac{C_f}{m} & 0 \\
+0 & 0 \\
+\frac{C_fl_f}{I_z} & 0 \\
+0 & 0 \\
+0 & 0 
 \end{bmatrix}
 $$
