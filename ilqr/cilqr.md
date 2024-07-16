@@ -345,3 +345,18 @@ $$\mu^+=\phi\mu, \phi > 1$$
    3. update $\lambda, \mu$
 5. until no constraints violation
 6. return $X, U, J$
+   
+**Algorithm 5 Penalty ILQR**
+1. Initialize $x_0,U, \lambda, \mu, tolerance$
+2. set $\phi > 1$
+3. compute initial trajectory: $X = f(x_0, U)$
+4. repeat inner loop (ilqr loop)
+   1. backward pass
+   2. forward pass
+   3. if constraint violation
+      1. increase penality $\lambda$
+   4. else
+      1. update(X, U, J)
+      2. decrease penality $\lambda$
+5. until convergence
+6. return $X, U, J$

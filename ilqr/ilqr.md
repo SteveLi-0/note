@@ -8,17 +8,14 @@ $$
     \dot{\delta} \\
     \dot{v} \\
     \dot{a}
-\end{bmatrix}
-=
-\begin{bmatrix}
+\end{bmatrix} = \begin{bmatrix}
     v \cos(\theta) \\
     v \sin(\theta) \\
     \frac{v \tan(\delta)}{L (1 + k v^2)} \\
     u_1 \\
     a \\
     u_2
-\end{bmatrix}
-=
+\end{bmatrix} =
 f(\mathbf{x}, \mathbf{u})
 $$
 
