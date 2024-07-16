@@ -122,7 +122,46 @@ why convex functions?
 ### 6. Unconstrained Optimization for Nonconvex Functions
 
 #### Line search steepest gradient descent
+$$\begin{aligned}&x^{k+1}=x^k+\tau d,\\&d=-\nabla f(x^k)\end{aligned}$$
 
+- constant step size $\tau = constant$
+- Diminishing the step size $\tau = \frac{1}{k}$
+- Exact line search $\tau=\arg\min_\alpha f(x^k+\alpha d)$
+- Inexact line search $\tau\in\left\{\alpha\mid f(x^k)-f(x^k+\alpha d)\geq-c\cdot\alpha d^\mathrm{T}\nabla f(x^k)\right\}$
+
+- constant step size: 
+  - too large: may oscillate and diverge
+  - too small: may take too long to converge
+- Diminishing the step size: 
+  - converge but expensive
+- Excact line search: 
+  - generally nontrivial
+- Inexact line search: 
+  - easy to satisfy
+  
+#### Inexcact line search (Armijo condition) 
+
+1. compute search gradient $d = - \nabla f(x^k)$
+2. while $f(x^k + \tau d) \geq f(x^k) + c \tau d^T \nabla f(x^k) $
+   1. $\tau = \tau / 2$
+3. Update iterate $x^{k+1} = x^k + \tau d$
 ### 7. Modified Damped Newton's Method
 
+#### Newtons's method
+
+**root finding problem**
+
+1st order Taylor expansion
+$$f(\boldsymbol{x})\approx\hat{f}\left(\boldsymbol{x}\right)\triangleq f(\boldsymbol{x}_k)+\nabla f(\boldsymbol{x}_k)^T(\boldsymbol{x}-\boldsymbol{x}_k)=0$$
+
+$$f(x)=0\rightarrow x^{k+1}=x^k-\frac{f(x^k)}{f'(x^k)}$$
+
+**minimization problem**
+
+2nd order Taylor expansion
+$$f(\boldsymbol{x})\approx\hat{f}\left(\boldsymbol{x}\right)\triangleq f(\boldsymbol{x}_k)+\nabla f(\boldsymbol{x}_k)^T(\boldsymbol{x}-\boldsymbol{x}_k)+\frac{1}{2}(\boldsymbol{x}-\boldsymbol{x}_k)^T\nabla^2f(\boldsymbol{x}_k)(\boldsymbol{x}-\boldsymbol{x}_k)$$
+
+$$\nabla\hat{f}\left(\boldsymbol{x}\right)=\nabla f(\boldsymbol{x}_k)^T+\nabla^2f(\boldsymbol{x}_k)(\boldsymbol{x}-\boldsymbol{x}_k)=0$$
+
+$$x^{k+1}=x^k-\nabla^2f(\boldsymbol{x}_k)^{-1}\nabla f(\boldsymbol{x}_k)$$
 
