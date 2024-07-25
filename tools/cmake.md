@@ -33,8 +33,25 @@ add_subdirectory (src)
 
 指定编译生成的二进制文件名称，和依赖的源文件。
 ### target_link_libraries
-
-将项目可执行文件链接到指定的库。
+```
+target_link_libraries(ilqr_tree utils)
+```
+将项目目标（可执行文件/库）链接到指定的库。ilqr_tree 目标依赖于 utils 库。
 ### add_dependencies
 ### add_custom_target
-## 
+
+### add_library
+```
+add_library(ilqr_tree 
+            SHARED 
+            ilqr_tree.cc 
+            ilqr_taylor_expansions.cc 
+            ilqr_node.cc 
+            ilqrtree_helpers.cc
+            )
+```
+创建一个名为 ilqr_tree 的共享库（动态库），ilqr_tree.cc, ilqr_taylor_expansions.cc, ilqr_node.cc, ilqrtree_helpers.cc：这些是组成 ilqr_tree 库的源文件。
+
+## 参考案例
+https://github.com/LAIRLAB/qr_trees
+
