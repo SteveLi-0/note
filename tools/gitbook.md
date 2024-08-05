@@ -261,3 +261,43 @@ $ git cherry-pick 4c805e2
 
 - rebase操作可以把本地未push的分叉提交历史整理成直线；
 - rebase的目的是使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。
+
+# workflow
+git checkout cnoa-develop
+切换到 cnoa-develop 分支。
+
+git pull
+从远程仓库拉取最新的更改并合并到当前分支。
+
+git branch
+列出所有本地分支。
+
+git checkout lowsoc-control-dev-v2
+切换到 lowsoc-control-dev-v2 分支。
+
+git checkout -b push-use
+基于当前分支创建并切换到一个新分支 push-use。
+
+git branch
+再次列出所有本地分支，确认新分支的创建和切换。
+
+git rebase cnoa-develop
+将当前分支上的提交应用到 cnoa-develop 分支的最新提交之后。
+
+git log
+显示当前分支的提交历史。
+
+git push gerrit HEAD:refs/for/cnoa-develop
+将当前分支的更改推送到远程仓库的 cnoa-develop 分支，使用 Gerrit 进行代码评审。
+
+git log
+再次查看提交历史。
+
+git commit -s --amend
+修改最后一次提交，并添加签名。
+
+git push gerrit HEAD:refs/for/cnoa-develop
+再次将更改推送到远程仓库的 cnoa-develop 分支。
+
+git branch
+再次列出所有本地分支，确认提交后的分支状态。
