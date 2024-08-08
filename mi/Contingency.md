@@ -1,4 +1,0 @@
-# Contingency
-
-lecture from jiangyuncheng
-
