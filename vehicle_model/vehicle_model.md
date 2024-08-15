@@ -405,11 +405,11 @@ a_y \\
 状态向量包含车辆的动力学状态：
 
 \[
-\mathbf{x} = \begin{pmatrix} x_1 \\ x_2 \\ x_3 \end{pmatrix} = \begin{pmatrix} \text{Yaw Rate (横摆角速度)} \\ \text{Lateral Velocity (侧向速度)} \\ \text{Steer Disturbance (转向干扰)} \end{pmatrix}
+\mathbf{x} = \begin{pmatrix} x_1 \\ x_2 \\ x_3 \end{pmatrix} = \begin{pmatrix} \text{Lateral Velocity (侧向速度)} \\ \text{Yaw Rate (横摆角速度)} \\ \text{Steer Disturbance (转向干扰)} \end{pmatrix}
 \]
 
-- \( x_1 \)：Yaw Rate (横摆角速度) - 单位：弧度每秒（rad/s）
-- \( x_2 \)：Lateral Velocity (侧向速度) - 单位：米每秒（m/s）
+- \( x_1 \)：Lateral Velocity (侧向速度) - 单位：米每秒（m/s）
+- \( x_2 \)：Yaw Rate (横摆角速度) - 单位：弧度每秒（rad/s）
 - \( x_3 \)：Steer Disturbance (转向干扰) - 单位：弧度（rad）
 
 ### 控制向量 \( \mathbf{u} \)
