@@ -55,3 +55,41 @@ agent_subgraph = np.hstack((
 - 最后的feature是轨迹子图和地图子图拼在一起。
 TODO：地图增量表达？
 TODO：多少秒历史预测多少秒未来？
+
+# 2. 模型
+## SubGraph GNN - Polyline subgraphs
+
+
+
+- 输入信息处理：输入的节点特征经过一个多层感知机（MLP）形式的 Node Encoder 处理。这个 Node Encoder 提取并转换输入的节点特征。
+
+- 双路处理：Node Encoder 的输出被分成两路
+  - 一路通过一个 Permutation Invariant Aggregator 来提取特征（**这个聚合器具有置换不变性**，图中采用了 Max Pooling 作为示例）；
+  - 另一条路径则直接输出。
+
+- Concat 操作：最后，来自双路的输出会进行 Concatenation（拼接操作），将两路的特征拼接为一个新的高维特征向量，作为当前层的 GNN 输出。
+
+- 结果输出：通过这个过程，生成了输出节点的特征。
+
+![](pic\subgraph-gnn.png)
+
+**具体实现**
+1. mlp = linear + layernorm + relu + linear ( kaiming_normal_ )
+2. GNN - pyG: 
+   1. message passing: nothing
+   2. aggregator: max pooling
+   3. update: torch.cat()
+
+## Global interation graph
+
+就是子注意力层
+
+**具体实现**
+1. qkv = linear + kaiming normal + relu + scale + softmax
+2. out = query + output
+
+## Prediciton MLP
+
+就是mlp
+
+## 完整的VectorNet
