@@ -1,4 +1,4 @@
-# Receding Horizon Motion Planning for Automated Lane Change and Merge Using Monte Carlo Tree Search and Level-K Game Theory
+# 【机翻】Receding Horizon Motion Planning for Automated Lane Change and Merge Using Monte Carlo Tree Search and Level-K Game Theory
 
 ## 摘要
 
@@ -152,14 +152,23 @@ $$
 
 表II展示了在不同层次和不同数量的交互车辆条件下，单次自车MCTS执行的计算时间。对于该表格中的数据，无论是自车的轨迹规划还是其他智能体的预测，每次MCTS的迭代次数均设为500。此外，算法在一台普通性能的计算机上执行，系统为Microsoft Windows，CPU为2.6 GHz，内存为8 GB，使用四个线程。所报告的计算时间为五次独立执行的平均值。
 
-| 自车层次   | 其他车辆数量   |
-| ---------- | -------------- |
-| 1          | 2              |
-| 2          | 3              |
-| 3          | 4              |
-| ---------- | -------------- |
+| Number of other vehicle | 1  | 2   | 3   | 4   |
+| ----------------------- | -- | --- | --- | --- |
+| Ego’s level            |    |     |     |     |
+| 0                       | 28 | 28  | 28  | 28  |
+| 1                       | 55 | 77  | 94  | 117 |
+| 2                       | 89 | 134 | 177 | 248 |
 
 大约执行了50个不同初始条件、静止障碍物、车道数量以及决策层次的车辆测试案例。表III展示了具有不同推理层次的车辆在避撞方面的统计数据。与文献【5†source】的表示方式类似，百分比表示特定层次的车辆间避撞事件总数与总交互次数的比率。
+
+| Scenario          | Collision avoidance stats. |
+| ----------------- | -------------------------- |
+| level-0 & level-0 | 52%                        |
+| level-0 & level-1 | 86%                        |
+| level-0 & level-2 | 57%                        |
+| level-1 & level-1 | 80%                        |
+| level-1 & level-2 | 82%                        |
+| level-2 & level-2 | 63%                        |
 
 图4显示了在多车道场景下包含多层次智能体的测试案例。Level-0的智能体成功规划了轨迹，在接近静止障碍物时完成了变道，同时保持了期望速度。Level-1智能体表现出谨慎的操作，因为它们假设所有周围智能体均为Level-0。Level-2的智能体在与Level-1智能体互动的过程中也成功完成了变道。Level-2智能体预测其他智能体的运动，假设它们均为Level-1，这与实际交互智能体的指定层次相一致。在该模拟中没有发生碰撞。然而，如果其他智能体的层次为零，则可能会发生碰撞，因为它们会将Level-2智能体视为静止对象。
 
