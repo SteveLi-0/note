@@ -320,13 +320,13 @@ $$
 
 在车辆动力学模型中，状态方程可以表示为：
 
-\[
+$$
 \dot{\mathbf{x}} = \mathbf{A} \mathbf{x} + \mathbf{B} \mathbf{u}
-\]
+$$
 
 其中：
 
-\[
+$$
 \mathbf{x} = \begin{bmatrix}
 v_x \\
 v_y \\
@@ -337,18 +337,18 @@ Y \\
 \delta \\
 \theta
 \end{bmatrix},
-\]
-\[
+$$
+$$
 \mathbf{u} = \begin{bmatrix}
 \delta_f \\
 a_y \\
 \theta_d
 \end{bmatrix}
-\]
+$$
 
-### 状态矩阵 \( \mathbf{A} \)
+### 状态矩阵 $ \mathbf{A} $
 
-\[
+$$
 \mathbf{A} = \begin{bmatrix}
 -\frac{C_f + C_r}{m \cdot v_y} & 0 & 0 & \frac{C_f \cdot l_f - C_r \cdot l_r}{m \cdot v_y} + v_y & 0 & 0 & -\frac{C_f}{m} & 0 \\
 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -359,11 +359,11 @@ a_y \\
 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
 \end{bmatrix}
-\]
+$$
 
-### 控制矩阵 \( \mathbf{B} \)
+### 控制矩阵 $ \mathbf{B} $
 
-\[
+$$
 \mathbf{B} = \begin{bmatrix}
 -\frac{C_f}{m} & 0 & 9.8 \\
 0 & 1 & 0 \\
@@ -374,102 +374,102 @@ a_y \\
 0 & 0 & 0 \\
 0 & 0 & 0 \\
 \end{bmatrix}
-\]
+$$
 
 ### 符号含义
 
-- \( \mathbf{x} \)：状态向量，包含以下状态量：
-  - \( v_x \)：车辆的纵向速度（前进速度）
-  - \( v_y \)：车辆的横向速度（侧滑速度）
-  - \( \psi \)：车辆的偏航角（航向角）
-  - \( r \)：车辆的偏航率
-  - \( X \)：车辆在全局坐标系下的横向位置
-  - \( Y \)：车辆在全局坐标系下的纵向位置
-  - \( \delta \)：车辆的转向角
-  - \( \theta \)：车辆的横摆角（偏航角扰动）
+- $ \mathbf{x} $：状态向量，包含以下状态量：
+  - $ v_x $：车辆的纵向速度（前进速度）
+  - $ v_y $：车辆的横向速度（侧滑速度）
+  - $ \psi $：车辆的偏航角（航向角）
+  - $ r $：车辆的偏航率
+  - $ X $：车辆在全局坐标系下的横向位置
+  - $ Y $：车辆在全局坐标系下的纵向位置
+  - $ \delta $：车辆的转向角
+  - $ \theta $：车辆的横摆角（偏航角扰动）
 
-- \( \mathbf{u} \)：控制向量，包含以下控制量：
-  - \( \delta_f \)：前轮的转向角
-  - \( a_y \)：横向加速度
-  - \( \theta_d \)：扰动量（如侧风引起的扰动）
+- $ \mathbf{u} $：控制向量，包含以下控制量：
+  - $ \delta_f $：前轮的转向角
+  - $ a_y $：横向加速度
+  - $ \theta_d $：扰动量（如侧风引起的扰动）
 
-- \( \mathbf{A} \)：状态矩阵，描述状态量之间的动态关系。
-- \( \mathbf{B} \)：控制矩阵，描述控制输入对状态量的影响。
+- $ \mathbf{A} $：状态矩阵，描述状态量之间的动态关系。
+- $ \mathbf{B} $：控制矩阵，描述控制输入对状态量的影响。
 
 ## 9.observer
 ### 状态方程
 
-以下是完整的状态方程，包括状态向量 \( \mathbf{x} \)、控制向量 \( \mathbf{u} \)、状态矩阵 \( A \) 和控制矩阵 \( B \)。
+以下是完整的状态方程，包括状态向量 $ \mathbf{x} $、控制向量 $ \mathbf{u} $、状态矩阵 $ A $ 和控制矩阵 $ B $。
 
-### 状态向量 \( \mathbf{x} \)
+### 状态向量 $ \mathbf{x} $
 状态向量包含车辆的动力学状态：
 
-\[
+$$
 \mathbf{x} = \begin{pmatrix} x_1 \\ x_2 \\ x_3 \end{pmatrix} = \begin{pmatrix} \text{Lateral Velocity (侧向速度)} \\ \text{Yaw Rate (横摆角速度)} \\ \text{Steer Disturbance (转向干扰)} \end{pmatrix}
-\]
+$$
 
-- \( x_1 \)：Lateral Velocity (侧向速度) - 单位：米每秒（m/s）
-- \( x_2 \)：Yaw Rate (横摆角速度) - 单位：弧度每秒（rad/s）
-- \( x_3 \)：Steer Disturbance (转向干扰) - 单位：弧度（rad）
+- $ x_1 $：Lateral Velocity (侧向速度) - 单位：米每秒（m/s）
+- $ x_2 $：Yaw Rate (横摆角速度) - 单位：弧度每秒（rad/s）
+- $ x_3 $：Steer Disturbance (转向干扰) - 单位：弧度（rad）
 
-### 控制向量 \( \mathbf{u} \)
+### 控制向量 $ \mathbf{u} $
 控制向量包含能够影响车辆状态的输入信号：
 
-\[
+$$
 \mathbf{u} = \begin{pmatrix} u_1 \\ u_2 \end{pmatrix} = \begin{pmatrix} \text{Steering Wheel Angle (前轮转角)} \\ \text{Roll Angle (侧倾角)} \end{pmatrix}
-\]
+$$
 
-- \( u_1 \)：Steering Wheel Angle (前轮转角) - 单位：弧度（rad）
-- \( u_2 \)：Roll Angle (侧倾角) - 单位：弧度（rad）
+- $ u_1 $：Steering Wheel Angle (前轮转角) - 单位：弧度（rad）
+- $ u_2 $：Roll Angle (侧倾角) - 单位：弧度（rad）
 
-### 状态矩阵 \( A \)
-状态矩阵 \( A \) 定义了系统状态的演变关系：
+### 状态矩阵 $ A $
+状态矩阵 $ A $ 定义了系统状态的演变关系：
 
-\[
+$$
 A = \begin{pmatrix}
 -\frac{C_f + C_r}{m \cdot v_y} & \frac{C_f \cdot l_f - C_r \cdot l_r}{m \cdot v_y} + v_y & -\frac{C_f}{m} \\
 \frac{C_f \cdot l_f - C_r \cdot l_r}{I_z \cdot v_y} & -\frac{C_f \cdot l_f^2 + C_r \cdot l_r^2}{I_z \cdot v_y} & \frac{C_f \cdot l_f}{I_z} \\
 0 & 0 & 0
 \end{pmatrix}
-\]
+$$
 
-- \( C_f \)：前轮侧偏刚度 (front corner stiffness)
-- \( C_r \)：后轮侧偏刚度 (rear corner stiffness)
-- \( m \)：车辆质量 (mass)
-- \( v_y \)：侧向速度 (lateral velocity)
-- \( l_f \)：车辆质心到前轴的距离 (distance from mass center to front axis)
-- \( l_r \)：车辆质心到后轴的距离 (distance from mass center to rear axis)
-- \( I_z \)：车辆绕垂直轴的转动惯量 (inertia of yaw)
+- $ C_f $：前轮侧偏刚度 (front corner stiffness)
+- $ C_r $：后轮侧偏刚度 (rear corner stiffness)
+- $ m $：车辆质量 (mass)
+- $ v_y $：侧向速度 (lateral velocity)
+- $ l_f $：车辆质心到前轴的距离 (distance from mass center to front axis)
+- $ l_r $：车辆质心到后轴的距离 (distance from mass center to rear axis)
+- $ I_z $：车辆绕垂直轴的转动惯量 (inertia of yaw)
 
-### 控制矩阵 \( B \)
-控制矩阵 \( B \) 定义了输入如何影响系统状态：
+### 控制矩阵 $ B $
+控制矩阵 $ B $ 定义了输入如何影响系统状态：
 
-\[
+$$
 B = \begin{pmatrix}
 -\frac{C_f}{m} & g \\
 \frac{C_f \cdot l_f}{I_z} & 0 \\
 0 & 0
 \end{pmatrix}
-\]
+$$
 
-- \( g \)：重力加速度
+- $ g $：重力加速度
 
 ### 完整的状态方程
 结合上述内容，离散化后的完整状态方程为：
 
-\[
+$$
 \mathbf{x}_{k+1} = A_d \cdot \mathbf{x}_k + B_d \cdot \mathbf{u}_k + \mathbf{L}_d \cdot (\mathbf{y}_k - C \cdot \mathbf{x}_k)
-\]
+$$
 
 其中：
 
-- \( \mathbf{x}_k \)：当前时刻 \( k \) 的状态向量
-- \( \mathbf{u}_k \)：当前时刻 \( k \) 的控制输入向量
-- \( A_d \)：离散化后的状态矩阵
-- \( B_d \)：离散化后的控制矩阵
-- \( \mathbf{L}_d \)：离散化后的增益矩阵，用于调整状态估计
-- \( \mathbf{y}_k \)：系统的输出量（测量的横摆角速度）
-- \( C \)：输出矩阵，通常为 \( \begin{pmatrix} 0 & 1 & 0 \end{pmatrix} \)
+- $ \mathbf{x}_k $：当前时刻 $ k $ 的状态向量
+- $ \mathbf{u}_k $：当前时刻 $ k $ 的控制输入向量
+- $ A_d $：离散化后的状态矩阵
+- $ B_d $：离散化后的控制矩阵
+- $ \mathbf{L}_d $：离散化后的增益矩阵，用于调整状态估计
+- $ \mathbf{y}_k $：系统的输出量（测量的横摆角速度）
+- $ C $：输出矩阵，通常为 $ \begin{pmatrix} 0 & 1 & 0 \end{pmatrix} $
 
-这个状态方程描述了在当前时刻 \( k \) 下，车辆的横摆角速度、侧向速度和转向干扰在下一时刻 \( k+1 \) 如何演变，取决于当前的状态和控制输入，以及外部的观测修正。
+这个状态方程描述了在当前时刻 $ k $ 下，车辆的横摆角速度、侧向速度和转向干扰在下一时刻 $ k+1 $ 如何演变，取决于当前的状态和控制输入，以及外部的观测修正。
 
